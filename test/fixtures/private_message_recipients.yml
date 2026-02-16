@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  private_message: one
+  recipient: one
+
+two:
+  private_message: two
+  recipient: two
