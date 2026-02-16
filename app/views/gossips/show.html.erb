@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-md-10 mx-auto">
+    <%= link_to "← Retour", root_path, class: "btn btn-outline-secondary btn-sm mb-4" %>
+
+    <div class="card shadow-lg border-0">
+      <div class="card-body p-5">
+        <div class="mb-4">
+          <span class="badge bg-primary fs-6 mb-3">
+            📰 Potin
+          </span>
+          <h1 class="display-5 mb-3"><%= @gossip.title %></h1>
+          
+          <div class="d-flex align-items-center gap-3 mb-4">
+            <div>
+              <span class="text-muted">Écrit par</span>
+              <p class="mb-0">
+                <strong>
+                  <%= link_to @gossip.user.first_name, user_path(@gossip.user), class: "text-decoration-none" %>
+                </strong>
+              </p>
+            </div>
+            <div class="text-muted">|</div>
+            <div>
+              <span class="text-muted">📅</span>
+              <p class="mb-0">
+                <%= l(@gossip.created_at, format: :short) %>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="content mb-5">
+          <p class="lead lh-lg">
+            <%= @gossip.content %>
+          </p>
+        </div>
+
+        <% if @gossip.tags.any? %>
+          <div class="mt-4">
+            <h6>🏷️ Tags:</h6>
+            <div>
+              <% @gossip.tags.each do |tag| %>
+                <span class="badge bg-info text-dark">
+                  <%= tag.title %>
+                </span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="mt-5">
+          <%= link_to "👤 Voir le profil de #{@gossip.user.first_name}", user_path(@gossip.user), class: "btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

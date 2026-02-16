@@ -1,0 +1,88 @@
+<div class="row">
+  <div class="col-md-8 mx-auto">
+    <%= link_to "← Retour", root_path, class: "btn btn-outline-secondary btn-sm mb-4" %>
+
+    <div class="card shadow-lg border-0">
+      <div class="card-body p-5">
+        <div class="text-center mb-5">
+          <div class="display-1 mb-3"></div>
+          <h1 class="display-5">
+            <strong><%= @user.first_name %> <%= @user.last_name %></strong>
+          </h1>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row mb-5">
+          <div class="col-md-6">
+            <h5>Informations</h5>
+            <ul class="list-unstyled">
+              <li class="mb-3">
+                <span class="text-muted">Âge:</span>
+                <strong><%= @user.age %> ans</strong>
+              </li>
+              <li class="mb-3">
+                <span class="text-muted">Ville:</span>
+                <strong><%= @user.city.name %> (<%= @user.city.zip_code %>)</strong>
+              </li>
+              <li class="mb-3">
+                <span class="text-muted">À propos:</span>
+                <p class="mb-0"><em><%= @user.description %></em></p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-md-6">
+            <h5>Statistiques</h5>
+            <ul class="list-unstyled">
+              <li class="mb-3">
+                <span class="text-muted">Nombre de potins:</span>
+                <strong><%= @user.gossips.count %></strong>
+              </li>
+              <li class="mb-3">
+                <span class="text-muted">Nombre de commentaires:</span>
+                <strong><%= @user.comments.count %></strong>
+              </li>
+              <li class="mb-3">
+                <span class="text-muted">Nombre de likes:</span>
+                <strong><%= @user.likes.count %></strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        <% if @user.gossips.any? %>
+          <div class="mt-5">
+            <h4> Potins de <%= @user.first_name %></h4>
+            <div class="list-group mt-3">
+              <% @user.gossips.order(created_at: :desc).each do |gossip| %>
+                <div class="list-group-item">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <h6 class="mb-1">
+                        <%= link_to gossip.title, gossip_path(gossip), class: "text-decoration-none" %>
+                      </h6>
+                      <p class="mb-1 text-muted">
+                        <%= truncate(gossip.content, length: 80) %>
+                      </p>
+                      <small class="text-secondary">
+                        <%= l(gossip.created_at, format: :short) %>
+                      </small>
+                    </div>
+                    <%= link_to "Lire", gossip_path(gossip), class: "btn btn-sm btn-outline-primary" %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% else %>
+          <div class="alert alert-info mt-5">
+            <%= @user.first_name %> n'a pas encore écrit de potin. 
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
