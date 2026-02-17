@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-md-8 mx-auto">
+    <%= link_to "Retour aux potins", gossips_path, class: "btn btn-outline-secondary btn-sm mb-4" %>
+
+    <h2 class="mb-4">Creer un nouveau potin</h2>
+
+    <% if @gossip.errors.any? %>
+      <div class="alert alert-danger">
+        <p><strong>Nous n'avons pas reussi a creer le potin pour la (ou les) raison(s) suivante(s) :</strong></p>
+        <ul class="mb-0">
+          <% @gossip.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_with(model: @gossip, local: true) do |f| %>
+      <div class="mb-3">
+        <%= f.label :title, "Titre", class: "form-label" %>
+        <%= f.text_field :title, class: "form-control", placeholder: "Titre du potin (3 a 14 caracteres)" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :content, "Contenu", class: "form-label" %>
+        <%= f.text_area :content, class: "form-control", rows: 5, placeholder: "Ecrivez votre potin ici..." %>
+      </div>
+
+      <div class="d-grid">
+        <%= f.submit "Publier le potin", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

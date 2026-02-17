@@ -4,4 +4,5 @@ class PrivateMessage < ApplicationRecord
   has_many :private_message_recipients, dependent: :destroy
   has_many :recipients, through: :private_message_recipients, source: :recipient
 
+  validates :content, presence: true
 end

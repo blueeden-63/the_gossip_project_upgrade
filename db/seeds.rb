@@ -22,13 +22,16 @@ paris = City.create!(name: "Paris", zip_code: "75000")
 lyon = City.create!(name: "Lyon", zip_code: "69000")
 marseille = City.create!(name: "Marseille", zip_code: "13000")
 
+# Create anonymous user (used for gossip creation without authentication)
+User.create!(first_name: "anonymous", last_name: "user", email: "anonymous@gossip.com", description: "Utilisateur anonyme", age: 1, city: paris)
+
 # Create users
 users = [
-  User.create!(first_name: "Alice", last_name: "Dupont", description: "Développeuse passionnée", age: 25, city: paris),
-  User.create!(first_name: "Bob", last_name: "Martin", description: "Designer créatif", age: 28, city: lyon),
-  User.create!(first_name: "Charlie", last_name: "Bernard", description: "Chef de projet", age: 32, city: marseille),
-  User.create!(first_name: "Diana", last_name: "Petit", description: "Directrice marketing", age: 30, city: paris),
-  User.create!(first_name: "Eva", last_name: "Moreau", description: "Graphic designer", age: 26, city: lyon),
+  User.create!(first_name: "Alice", last_name: "Dupont", email: "alice@gossip.com", description: "Developpeuse passionnee", age: 25, city: paris),
+  User.create!(first_name: "Bob", last_name: "Martin", email: "bob@gossip.com", description: "Designer creatif", age: 28, city: lyon),
+  User.create!(first_name: "Charlie", last_name: "Bernard", email: "charlie@gossip.com", description: "Chef de projet", age: 32, city: marseille),
+  User.create!(first_name: "Diana", last_name: "Petit", email: "diana@gossip.com", description: "Directrice marketing", age: 30, city: paris),
+  User.create!(first_name: "Eva", last_name: "Moreau", email: "eva@gossip.com", description: "Graphic designer", age: 26, city: lyon),
 ]
 
 # Create tags
@@ -43,32 +46,32 @@ tags = [
 # Create gossips
 gossips = [
   Gossip.create!(
-    title: "Le nouveau café du coin est incroyable!",
-    content: "Vous devez absolument essayer leur espresso, c'est dingue! ",
+    title: "Nouveau cafe",
+    content: "Vous devez absolument essayer leur espresso, c'est dingue!",
     user: users[0],
     created_at: 2.days.ago
   ),
   Gossip.create!(
-    title: "J'ai trouvé un bug bizarre en production",
-    content: "Les variables s'affichaient en reverse pour une raison inconnue. Ça m'a pris 3h à déboguer! ",
+    title: "Bug en prod",
+    content: "Les variables s'affichaient en reverse pour une raison inconnue. Ca m'a pris 3h a debuguer!",
     user: users[1],
     created_at: 1.day.ago
   ),
   Gossip.create!(
-    title: "Réunion d'équipe ",
-    content: "Nous faisons une réunion demain pour célébrer nos 100 utilisateurs! Venez tous avec vos idées!",
+    title: "Reunion",
+    content: "Nous faisons une reunion demain pour celebrer nos 100 utilisateurs! Venez tous avec vos idees!",
     user: users[2],
     created_at: 12.hours.ago
   ),
   Gossip.create!(
-    title: "Nouvelle campagne marketing lancée",
-    content: "Notre nouvelle campagne est allée live! Attendez de voir les résultats... ",
+    title: "Campagne pub",
+    content: "Notre nouvelle campagne est allee live! Attendez de voir les resultats...",
     user: users[3],
     created_at: 6.hours.ago
   ),
   Gossip.create!(
-    title: "Derniers potins du bureau ",
-    content: "Voici notre super site de potins, il est chouette, non? ",
+    title: "Potins bureau",
+    content: "Voici notre super site de potins, il est chouette, non?",
     user: users[4],
     created_at: 3.hours.ago
   ),

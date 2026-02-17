@@ -2,7 +2,7 @@
   <div class="col-md-8 mx-auto">
     <div class="alert alert-info border-0 shadow-sm mb-5">
       <h1 class="display-4 mb-3">Bienvenue sur Gossip Project!</h1>
-      <p class="lead">Découvrez les meilleurs potins du moment. Partagez, lisez, amusez-vous!</p>
+      <p class="lead">Decouvrez les meilleurs potins du moment. Partagez, lisez, amusez-vous!</p>
     </div>
 
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -12,12 +12,12 @@
 
     <% if @gossips.any? %>
       <div class="row g-4">
-        <% @gossips.each do |gossip| %> 
+        <% @gossips.each do |gossip| %>
           <div class="col-md-6">
             <div class="card h-100 shadow-sm hover-card">
               <div class="card-body">
                 <span class="badge bg-dark mb-2">
-                  <%= gossip.user.first_name %> 
+                  <%= gossip.user.first_name %>
                 </span>
                 <h5 class="card-title"><%= gossip.title %></h5>
                 <p class="card-text text-muted"><%= truncate(gossip.content, length: 100) %></p>
@@ -34,7 +34,7 @@
       </div>
     <% else %>
       <div class="alert alert-warning">
-        Aucun potin pour le moment. Revenez bientôt ! 
+        Aucun potin pour le moment. Revenez bientot !
       </div>
     <% end %>
   </div>

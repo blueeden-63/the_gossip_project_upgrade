@@ -1,7 +1,12 @@
 class User < ApplicationRecord
-belongs_to :city
+  belongs_to :city
 
-has_many :gossips, dependent: :destroy
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :email, presence: true
+  validates :age, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
+
+  has_many :gossips, dependent: :destroy
 
 has_many :comments, dependent: :destroy
 has_many :likes, dependent: :destroy

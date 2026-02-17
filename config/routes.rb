@@ -9,9 +9,8 @@ Rails.application.routes.draw do
   get '/welcome/:first_name', to: 'static_pages#welcome'
 
   # Gossips
-  get '/gossips', to: 'gossips#index'
-  get '/gossips/:id', to: 'gossips#show', as: 'gossip'
+  resources :gossips, only: [:index, :show, :new, :create]
 
   # Users
-  get '/users/:id', to: 'users#show', as: 'user'
+  resources :users, only: [:show]
 end
