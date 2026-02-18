@@ -21,6 +21,9 @@
                 </span>
                 <h5 class="card-title"><%= gossip.title %></h5>
                 <p class="card-text text-muted"><%= truncate(gossip.content, length: 100) %></p>
+                <p class="mb-2">
+                  <small class="text-muted"><%= gossip.comments.count %> commentaire(s)</small>
+                </p>
                 <small class="text-secondary">
                   <%= l(gossip.created_at, format: :short) %>
                 </small>

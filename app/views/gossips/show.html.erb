@@ -1,18 +1,16 @@
 <div class="row">
   <div class="col-md-10 mx-auto">
-    <%= link_to "← Retour", root_path, class: "btn btn-outline-secondary btn-sm mb-4" %>
+    <%= link_to "Retour", gossips_path, class: "btn btn-outline-secondary btn-sm mb-4" %>
 
     <div class="card shadow-lg border-0">
       <div class="card-body p-5">
         <div class="mb-4">
-          <span class="badge bg-primary fs-6 mb-3">
-            📰 Potin
-          </span>
+          <span class="badge bg-primary fs-6 mb-3">Potin</span>
           <h1 class="display-5 mb-3"><%= @gossip.title %></h1>
-          
+
           <div class="d-flex align-items-center gap-3 mb-4">
             <div>
-              <span class="text-muted">Écrit par</span>
+              <span class="text-muted">Ecrit par</span>
               <p class="mb-0">
                 <strong>
                   <%= link_to @gossip.user.first_name, user_path(@gossip.user), class: "text-decoration-none" %>
@@ -21,12 +19,11 @@
             </div>
             <div class="text-muted">|</div>
             <div>
-              <span class="text-muted">📅</span>
-              <p class="mb-0">
-                <%= l(@gossip.created_at, format: :short) %>
-              </p>
+              <span class="text-muted">Ville</span>
+              <p class="mb-0"><%= link_to @gossip.user.city.name, city_path(@gossip.user.city), class: "text-decoration-none" %></p>
             </div>
           </div>
+          <small class="text-secondary"><%= l(@gossip.created_at, format: :short) %></small>
         </div>
 
         <hr class="my-4">
@@ -39,7 +36,7 @@
 
         <% if @gossip.tags.any? %>
           <div class="mt-4">
-            <h6>🏷️ Tags:</h6>
+            <h6>Tags:</h6>
             <div>
               <% @gossip.tags.each do |tag| %>
                 <span class="badge bg-info text-dark">
@@ -50,8 +47,45 @@
           </div>
         <% end %>
 
-        <div class="mt-5">
-          <%= link_to "👤 Voir le profil de #{@gossip.user.first_name}", user_path(@gossip.user), class: "btn btn-primary" %>
+        <div class="d-flex gap-2 mt-5">
+          <%= link_to "Voir l'auteur", user_path(@gossip.user), class: "btn btn-primary" %>
+          <%= link_to "Modifier", edit_gossip_path(@gossip), class: "btn btn-outline-warning" %>
+          <%= link_to "Supprimer", gossip_path(@gossip), data: { turbo_method: :delete, turbo_confirm: "Confirmer la suppression ?" }, class: "btn btn-outline-danger" %>
+        </div>
+
+        <hr class="my-5">
+
+        <h4 class="mb-3">Commentaires</h4>
+
+        <% if @comments.any? %>
+          <div class="list-group mb-4">
+            <% @comments.each do |comment| %>
+              <div class="list-group-item">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <strong><%= comment.user.first_name %></strong>
+                    <p class="mb-1 mt-1"><%= comment.content %></p>
+                    <small class="text-secondary"><%= l(comment.created_at, format: :short) %></small>
+                  </div>
+                  <%= link_to "Modifier", edit_comment_path(comment), class: "btn btn-sm btn-outline-primary" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="alert alert-light border">Aucun commentaire pour le moment.</div>
+        <% end %>
+
+        <h5 class="mb-3">Ajouter un commentaire</h5>
+
+        <%= form_with(model: [@gossip, @comment], local: true) do |f| %>
+          <div class="mb-3">
+            <%= f.label :content, "Contenu", class: "form-label" %>
+            <%= f.text_area :content, class: "form-control", rows: 3, placeholder: "Votre commentaire" %>
+          </div>
+
+          <%= f.submit "Publier", class: "btn btn-success" %>
+        <% end %>
         </div>
       </div>
     </div>

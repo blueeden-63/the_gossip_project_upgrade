@@ -23,7 +23,7 @@
               </li>
               <li class="mb-3">
                 <span class="text-muted">Ville:</span>
-                <strong><%= @user.city.name %> (<%= @user.city.zip_code %>)</strong>
+                <strong><%= link_to @user.city.name, city_path(@user.city), class: "text-decoration-none" %> (<%= @user.city.zip_code %>)</strong>
               </li>
               <li class="mb-3">
                 <span class="text-muted">À propos:</span>

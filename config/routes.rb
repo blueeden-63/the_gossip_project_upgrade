@@ -9,8 +9,17 @@ Rails.application.routes.draw do
   get '/welcome/:first_name', to: 'static_pages#welcome'
 
   # Gossips
-  resources :gossips, only: [:index, :show, :new, :create]
+  resources :gossips do
+    resources :comments, only: [:create]
+  end
+
 
   # Users
   resources :users, only: [:show]
+
+  # Cities
+  resources :cities, only: [:show]
+
+  # Comments
+  resources :comments, only: [:edit, :update, :destroy]
 end
