@@ -32,6 +32,7 @@
           <p class="lead lh-lg">
             <%= @gossip.content %>
           </p>
+          <p class="mb-0"><small class="text-muted"><%= @gossip.likes.count %> like(s)</small></p>
         </div>
 
         <% if @gossip.tags.any? %>
@@ -49,8 +50,19 @@
 
         <div class="d-flex gap-2 mt-5">
           <%= link_to "Voir l'auteur", user_path(@gossip.user), class: "btn btn-primary" %>
-          <%= link_to "Modifier", edit_gossip_path(@gossip), class: "btn btn-outline-warning" %>
-          <%= link_to "Supprimer", gossip_path(@gossip), data: { turbo_method: :delete, turbo_confirm: "Confirmer la suppression ?" }, class: "btn btn-outline-danger" %>
+          <% if user_signed_in? %>
+            <% if @liked_by_current_user %>
+              <%= button_to "Unlike", gossip_like_path(@gossip), method: :delete, class: "btn btn-outline-danger" %>
+            <% else %>
+              <%= button_to "Like", gossip_like_path(@gossip), method: :post, class: "btn btn-outline-success" %>
+            <% end %>
+          <% else %>
+            <span class="text-muted align-self-center">Connecte-toi pour liker</span>
+          <% end %>
+          <% if user_signed_in? && current_user == @gossip.user %>
+            <%= link_to "Modifier", edit_gossip_path(@gossip), class: "btn btn-outline-warning" %>
+            <%= link_to "Supprimer", gossip_path(@gossip), data: { turbo_method: :delete, turbo_confirm: "Confirmer la suppression ?" }, class: "btn btn-outline-danger" %>
+          <% end %>
         </div>
 
         <hr class="my-5">
@@ -67,7 +79,9 @@
                     <p class="mb-1 mt-1"><%= comment.content %></p>
                     <small class="text-secondary"><%= l(comment.created_at, format: :short) %></small>
                   </div>
-                  <%= link_to "Modifier", edit_comment_path(comment), class: "btn btn-sm btn-outline-primary" %>
+                  <% if user_signed_in? && current_user == comment.user %>
+                    <%= link_to "Modifier", edit_comment_path(comment), class: "btn btn-sm btn-outline-primary" %>
+                  <% end %>
                 </div>
               </div>
             <% end %>

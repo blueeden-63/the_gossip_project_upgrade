@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="col-md-8 mx-auto">
+    <h2 class="mb-4">S'inscrire</h2>
+
+    <% if @user.errors.any? %>
+      <div class="alert alert-danger">
+        <ul class="mb-0">
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_with model: @user, local: true do |f| %>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <%= f.label :first_name, "Prenom", class: "form-label" %>
+          <%= f.text_field :first_name, class: "form-control", required: true %>
+        </div>
+        <div class="col-md-6 mb-3">
+          <%= f.label :last_name, "Nom", class: "form-label" %>
+          <%= f.text_field :last_name, class: "form-control", required: true %>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :email, "Email", class: "form-label" %>
+        <%= f.email_field :email, class: "form-control", required: true %>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <%= f.label :age, "Age", class: "form-label" %>
+          <%= f.number_field :age, class: "form-control", min: 1 %>
+        </div>
+        <div class="col-md-6 mb-3">
+          <%= label_tag "user_city_name", "Ville", class: "form-label" %>
+          <%= text_field_tag "user[city_name]", params.dig(:user, :city_name), class: "form-control", placeholder: "Ex: Paris", required: true %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <%= label_tag "user_city_zip_code", "Code postal", class: "form-label" %>
+          <%= text_field_tag "user[city_zip_code]", params.dig(:user, :city_zip_code), class: "form-control", placeholder: "Ex: 75001", required: true %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <%= f.label :password, "Mot de passe", class: "form-label" %>
+          <%= f.password_field :password, class: "form-control", required: true %>
+        </div>
+        <div class="col-md-6 mb-3">
+          <%= f.label :password_confirmation, "Confirmation", class: "form-label" %>
+          <%= f.password_field :password_confirmation, class: "form-control", required: true %>
+        </div>
+      </div>
+
+      <div class="d-grid">
+        <%= f.submit "Creer mon compte", class: "btn btn-success" %>
+      </div>
+    <% end %>
+  </div>
+</div>

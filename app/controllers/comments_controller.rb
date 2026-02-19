@@ -1,10 +1,12 @@
 class CommentsController < ApplicationController
+  before_action :require_login
   before_action :set_comment, only: [:edit, :update, :destroy]
+  before_action :authorize_comment_owner!, only: [:edit, :update, :destroy]
 
   def create
     @gossip = Gossip.find(params[:gossip_id])
     @comment = @gossip.comments.new(comment_params)
-    @comment.user = User.find_by(first_name: "anonymous")
+    @comment.user = current_user
 
     if @comment.save
       flash[:success] = "Commentaire ajoute avec succes"
@@ -42,5 +44,12 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:content)
+  end
+
+  def authorize_comment_owner!
+    return if @comment.user_id == current_user.id
+
+    flash[:error] = "Action non autorisee"
+    redirect_to gossip_path(@comment.commentable)
   end
 end

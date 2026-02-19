@@ -10,16 +10,20 @@ Rails.application.routes.draw do
 
   # Gossips
   resources :gossips do
-    resources :comments, only: [:create]
+  resources :comments, only: [:create]
+  resource :like, only: [:create, :destroy]
   end
 
 
   # Users
-  resources :users, only: [:show]
+  resources :users, only: [:new, :create, :show]
 
   # Cities
   resources :cities, only: [:show]
 
   # Comments
   resources :comments, only: [:edit, :update, :destroy]
+
+  #Logins
+  resource :session, only: [:new, :create, :destroy]
 end

@@ -24,12 +24,24 @@
                 <p class="mb-2">
                   <small class="text-muted"><%= gossip.comments.count %> commentaire(s)</small>
                 </p>
+                <p class="mb-2">
+                  <small class="text-muted"><%= gossip.likes.count %> like(s)</small>
+                </p>
                 <small class="text-secondary">
                   <%= l(gossip.created_at, format: :short) %>
                 </small>
               </div>
               <div class="card-footer bg-white border-top-0">
                 <%= link_to "Lire plus", gossip_path(gossip), class: "btn btn-sm btn-primary" %>
+                <% if user_signed_in? %>
+                  <% if @liked_gossip_ids.include?(gossip.id) %>
+                    <%= button_to "Unlike", gossip_like_path(gossip), method: :delete, class: "btn btn-sm btn-outline-danger ms-2 d-inline" %>
+                  <% else %>
+                    <%= button_to "Like", gossip_like_path(gossip), method: :post, class: "btn btn-sm btn-outline-success ms-2 d-inline" %>
+                  <% end %>
+                <% else %>
+                  <small class="text-muted ms-2">Connecte-toi pour liker</small>
+                <% end %>
               </div>
             </div>
           </div>
